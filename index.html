@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" >
+<head>
+  <meta charset="UTF-8">
+  <title> Happy birthday Card</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<canvas id="confetti"></canvas>
+
+<div id="balloons"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  // 🎉 Confeti inicial
+confetti({
+  particleCount: 200,
+  spread: 100,
+  origin: { y: 0.6 },
+  scalar: 2   // tamaño más grande
+});
+
+// 🎉 Confeti cada 3 segundos
+setInterval(() => {
+  confetti({
+    particleCount: 100,
+    spread: 120,
+    origin: { x: Math.random(), y: Math.random() - 0.2 },
+    scalar: 2   // tamaño más grande
+  });
+}, 3000);
+
+
+  // 🎈 Globos dinámicos
+  function createBalloon() {
+    const balloon = document.createElement("div");
+    balloon.classList.add("balloon");
+    balloon.style.left = Math.random() * 100 + "vw";
+    balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    document.getElementById("balloons").appendChild(balloon);
+
+    // Eliminar globo después de animarse
+    setTimeout(() => balloon.remove(), 8000);
+  }
+
+  // Crear globos cada segundo
+  setInterval(createBalloon, 1000);
+</script>
+
+
+<body>
+<div id="dragon-balls"></div>
+
+
+<div class="card">
+		<div class="imgBox">
+			<div class="bark"></div>
+			<img src="dino.png">
+		</div>
+		<div class="details">
+			<h4 class="color3">FELIZ CUMPLEAÑOS SOLEDAD!</h4>
+			<!--h4 class="color2 margin"></h3> -->
+			<p>Espero que hayas pasado un excelente cumpleaños con tus seres queridos y a pesar de que seas mentirosa, bandida, gorriadora, traicionera, ponzoñosa, comunista y mentirosa, te deseo lo mejor hoy y siempre. </p>
+		</div>
+	</div>
+
+</body>
+<audio id="music" src="DBZ.mp3" preload="auto"></audio>
+<button id="playBtn">🔊</button>
+
+<script>
+  const card = document.querySelector(".card");
+  const music = document.getElementById("music");
+  const playBtn = document.getElementById("playBtn");
+
+  // Botón de prueba (para desbloquear audio en navegadores)
+  playBtn.addEventListener("click", () => {
+    music.play();
+    playBtn.style.display = "none"; // ocultar botón una vez suena
+  });
+
+  // Al pasar/clicar la tarjeta también arranca
+  function playMusic() {
+    if (music.paused) {
+      music.currentTime = 0;
+      music.play();
+    }
+  }
+
+  card.addEventListener("mouseenter", playMusic);
+  card.addEventListener("click", playMusic);
+</script>
+
+  <script src="./script.js"></script>
+</html>
